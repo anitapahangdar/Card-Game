@@ -50,16 +50,19 @@ public class CardGame {
 		ArrayList<String> player1 = new ArrayList<>();
 		ArrayList<String> player2 = new ArrayList<>();
 		
-		//asking how many cards each user want to have 
-		System.out.print("\nHow many cards should I give to each player?(maximum 26 and minimum 1) ");
-		int count = sc.nextInt();
-		
-		//checking the validation of the input
-		while(count>26 || count<1) {
-			System.out.println("Invalid Input! Try again");
-			System.out.println("make sure that the number is between 1 and 26");
-			System.out.print("\nHow many cards should I give to each player? ");
-			count = sc.nextInt();
+		//Ask how many cards each player should receive and validate all input.
+		int count = 0;
+		while (count < 1 || count > 26) {
+			System.out.print("\nHow many cards should I give to each player? (1-26): ");
+			if (sc.hasNextInt()) {
+				count = sc.nextInt();
+				if (count < 1 || count > 26) {
+					System.out.println("Please enter a number between 1 and 26.");
+				}
+			} else {
+				System.out.println("Please enter a whole number.");
+				sc.next();
+			}
 		}
 		
 		//calling the method deal to hand cards out to the players
@@ -86,10 +89,11 @@ public class CardGame {
 		int player2Point = calcPoints(player2);
 		
 		if (player1Point > player2Point) {
-			System.out.println("\nCongratulation! Player 1 won this hand with " + player1Point + " points");
-		}
-		else {
-			System.out.println("\nCongratulation! Player 2 won this hand with " + player2Point + " points");
+			System.out.println("\nCongratulations! Player 1 won this hand with " + player1Point + " points.");
+		} else if (player2Point > player1Point) {
+			System.out.println("\nCongratulations! Player 2 won this hand with " + player2Point + " points.");
+		} else {
+			System.out.println("\nThis hand is a tie at " + player1Point + " points each.");
 		}
 		
 		System.out.println("Thank you for playing! Restart the program to play again.");
